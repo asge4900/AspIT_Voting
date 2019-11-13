@@ -1,0 +1,53 @@
+﻿{
+   "ContextClassName": "AppDbContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "DoNotCombineNamespace": false,
+   "IdReplace": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "Data",
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "AspIT_Voting.Web",
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Activities]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[ActivitySuggestions]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Foods]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FoodSuggestions]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[sysdiagrams]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[UserActivities]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[UserFoods]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Users]"
+      }
+   ],
+   "UseDatabaseNames": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false
+}
