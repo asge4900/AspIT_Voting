@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspIT_Voting.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -27,11 +28,11 @@ namespace AspIT_Voting.Web.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            if (!signInManager.IsSignedIn(User))
+            if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
-                return RedirectToAction(nameof(Login));
-            }
-            return View();
+                return View();
+            } 
+            return RedirectToAction(nameof(Login));   
         }
 
         [HttpGet]
@@ -61,13 +62,14 @@ namespace AspIT_Voting.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Super Admin")]
         public IActionResult AdminRegister()
         {
-
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> AdminRegister(AdminRegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -81,6 +83,8 @@ namespace AspIT_Voting.Web.Controllers
 
                 if (result.Succeeded)
                 {
+                    result = await userManager.AddToRoleAsync(user, "Admin");
+
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -94,12 +98,102 @@ namespace AspIT_Voting.Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = userManager.Users;
+
+            return View(users);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                return View("NotFound");
+            }            
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var model = new EditUserViewModel
+            {
+                Id = user.Id,                
+                UserName = user.UserName,                         
+                Roles = userRoles
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        {
+            var user = await userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {model.Id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {               
+                user.UserName = model.UserName;               
+
+                var result = await userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(ListUsers));
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);           
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("ListUsers");
+            }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Super Admin")]
         public IActionResult CreateRole()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (ModelState.IsValid)
@@ -125,6 +219,7 @@ namespace AspIT_Voting.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Super Admin")]
         public IActionResult ListRoles()
         {
             var roles = roleManager.Roles;
@@ -132,6 +227,7 @@ namespace AspIT_Voting.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> EditRole(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
@@ -160,6 +256,7 @@ namespace AspIT_Voting.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             var role = await roleManager.FindByIdAsync(model.Id);
@@ -189,6 +286,7 @@ namespace AspIT_Voting.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
             ViewBag.roleId = roleId;
@@ -227,6 +325,7 @@ namespace AspIT_Voting.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
             var role = await roleManager.FindByIdAsync(roleId);

@@ -1,4 +1,4 @@
-﻿
+﻿@inject SignInManager<ApplicationUser> signInManager;
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,15 +6,17 @@
 
 <h1>Index</h1>
 
-@Html.ActionLink("Admin Register", "AdminRegister", "Admin")
+@if (signInManager.IsSignedIn(User) && User.IsInRole("Super Admin"))
+{
+    @Html.ActionLink("Admin Register", "AdminRegister", "Admin")
 
-<br />
-<br />
+    <br />
+    <br />
 
-@Html.ActionLink("Login", "Login", "Admin")
+    @Html.ActionLink("Role", "ListRoles", "Admin")
 
-<br />
-<br />
+    <br />
+    <br />
 
-@Html.ActionLink("Role", "ListRoles", "Admin")
-
+    @Html.ActionLink("Users", "ListUsers", "Admin")
+}
