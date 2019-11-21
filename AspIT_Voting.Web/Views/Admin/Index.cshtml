@@ -6,7 +6,7 @@
 
 <h1>Index</h1>
 
-@if (signInManager.IsSignedIn(User) && User.IsInRole("Super Admin"))
+@if (User.IsInRole("Super Admin"))
 {
     @Html.ActionLink("Admin Register", "AdminRegister", "Admin")
 
@@ -17,6 +17,6 @@
 
     <br />
     <br />
-
-    @Html.ActionLink("Users", "ListUsers", "Admin")
 }
+
+@Html.ActionLink("Users", "ListUsers", "Admin")

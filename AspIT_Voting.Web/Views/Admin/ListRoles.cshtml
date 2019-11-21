@@ -16,13 +16,13 @@
             <div class="card-header">
                 Role Id : @role.Id
             </div>
-            <div class="card-header">
+            <div class="card-body">
                 <h5 class="card-title">@role.Name</h5>
             </div>
             <div class="card-footer">
                 <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post" class="row">
                     <div class="editDiv">
-                        <a class="btn btn-primary" asp-controller="Admin" asp-action="EditRole" asp-route-id="@role.Id">Edit</a>
+                        <a asp-controller="Admin" asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary">Rediger</a>
                     </div>
 
                     <div class="text-center confirmDeleteDiv hide" id="confirmDeleteDiv_@role.Id">

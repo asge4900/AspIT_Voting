@@ -1,7 +1,8 @@
-﻿//EventListener for slet
+﻿//Confirm delete
 const deleteDivs = document.querySelectorAll(".deleteDiv a");
 deleteDivs.forEach(element => {
-    element.addEventListener("click", (event) =>{         
+    element.addEventListener("click", (event) =>{     
+        event.preventDefault();    
         const elementId = event.target.getAttribute("data-id");
         
 
@@ -10,10 +11,11 @@ deleteDivs.forEach(element => {
     })
 });
 
-//EventListener for nej
+
 const confirmDeleteDivs = document.querySelectorAll(".confirmDeleteDiv a");
 confirmDeleteDivs.forEach(element => {
-    element.addEventListener("click", (event) =>{         
+    element.addEventListener("click", (event) =>{  
+        event.preventDefault();       
         const userId = event.target.getAttribute("data-id");        
 
         confirmDelete(userId)
@@ -21,7 +23,7 @@ confirmDeleteDivs.forEach(element => {
     })
 });
 
-//Hide or show confirmDelete
+
 function confirmDelete(uniqueId) {    
     let deleteDiv = document.getElementById('deleteDiv_' + uniqueId)   
     let confirmDeleteDiv = document.getElementById('confirmDeleteDiv_' + uniqueId)    

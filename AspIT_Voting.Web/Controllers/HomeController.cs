@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using AspIT_Voting.Web.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspIT_Voting.Web.Controllers
 {
@@ -21,6 +22,7 @@ namespace AspIT_Voting.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
@@ -37,6 +39,7 @@ namespace AspIT_Voting.Web.Controllers
         }       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [AllowAnonymous]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
