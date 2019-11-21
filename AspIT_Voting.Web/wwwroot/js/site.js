@@ -1,4 +1,31 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿//EventListener for slet
+const deleteDivs = document.querySelectorAll(".deleteDiv a");
+deleteDivs.forEach(element => {
+    element.addEventListener("click", (event) =>{         
+        const elementId = event.target.getAttribute("data-id");
+        
 
-// Write your JavaScript code.
+        confirmDelete(elementId)
+        
+    })
+});
+
+//EventListener for nej
+const confirmDeleteDivs = document.querySelectorAll(".confirmDeleteDiv a");
+confirmDeleteDivs.forEach(element => {
+    element.addEventListener("click", (event) =>{         
+        const userId = event.target.getAttribute("data-id");        
+
+        confirmDelete(userId)
+        
+    })
+});
+
+//Hide or show confirmDelete
+function confirmDelete(uniqueId) {    
+    let deleteDiv = document.getElementById('deleteDiv_' + uniqueId)   
+    let confirmDeleteDiv = document.getElementById('confirmDeleteDiv_' + uniqueId)    
+    
+    deleteDiv.classList.toggle("hide");
+    confirmDeleteDiv.classList.toggle("hide");   
+}

@@ -1,0 +1,23 @@
+﻿body {
+
+    .editDiv {
+        position: relative;
+
+        a {
+            position: absolute;
+            bottom: 0;
+        }
+    }   
+
+    .confirmDeleteDiv {
+        margin-left: 1px;
+    }
+
+    .deleteDiv {
+        margin-left: 60px;
+    }
+
+    .hide {
+        display: none;
+    }
+}

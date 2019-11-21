@@ -226,6 +226,34 @@ namespace AspIT_Voting.Web.Controllers
             return View(roles);
         }
 
+        [HttpPost]       
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            var role = await roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await roleManager.DeleteAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListRoles");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("ListRoles");
+            }
+        }
+
         [HttpGet]
         [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> EditRole(string id)
@@ -255,8 +283,7 @@ namespace AspIT_Voting.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Super Admin")]
+        [HttpPost]        
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             var role = await roleManager.FindByIdAsync(model.Id);
@@ -324,8 +351,7 @@ namespace AspIT_Voting.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Super Admin")]
+        [HttpPost]        
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
             var role = await roleManager.FindByIdAsync(roleId);
@@ -361,7 +387,6 @@ namespace AspIT_Voting.Web.Controllers
                         continue;
                     else
                         return RedirectToAction("EditRole", new { Id = roleId });
-
                 }
             }
             return RedirectToAction("EditRole", new { Id = roleId });

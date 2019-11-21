@@ -20,8 +20,22 @@
                 <h5 class="card-title">@role.Name</h5>
             </div>
             <div class="card-footer">
-                <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post">
-                    <a class="btn btn-primary" asp-controller="Admin" asp-action="EditRole" asp-route-id="@role.Id">Edit</a>
+                <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post" class="row">
+                    <div class="editDiv">
+                        <a class="btn btn-primary" asp-controller="Admin" asp-action="EditRole" asp-route-id="@role.Id">Edit</a>
+                    </div>
+
+                    <div class="text-center confirmDeleteDiv hide" id="confirmDeleteDiv_@role.Id">
+                        <span>Er du sikker på at du vil slette?</span>
+                        <div>
+                            <input type="submit" value="Ja" class="btn btn-danger" />
+                            <a href="#" class="btn btn-primary" data-id="@role.Id">Nej</a>
+                        </div>
+                    </div>
+
+                    <div class="deleteDiv" id="deleteDiv_@role.Id">
+                        <a href="#" class="btn btn-danger" data-id="@role.Id">Slet</a>
+                    </div>
                 </form>
             </div>
         </div>
