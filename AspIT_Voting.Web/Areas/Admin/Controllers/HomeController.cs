@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspIT_Voting.Web.Areas.Admin.ViewModels;
 using AspIT_Voting.Web.Models;
-using AspIT_Voting.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspIT_Voting.Web.Controllers
+namespace AspIT_Voting.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
-    public class AdminController : Controller
+    public class HomeController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public AdminController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public HomeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -31,8 +32,8 @@ namespace AspIT_Voting.Web.Controllers
             if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
                 return View();
-            } 
-            return RedirectToAction(nameof(Login));   
+            }
+            return RedirectToAction(nameof(Login));
         }
 
         [HttpGet]
@@ -114,13 +115,13 @@ namespace AspIT_Voting.Web.Controllers
             {
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
                 return View("NotFound");
-            }            
+            }
             var userRoles = await userManager.GetRolesAsync(user);
 
             var model = new EditUserViewModel
             {
-                Id = user.Id,                
-                UserName = user.UserName,                         
+                Id = user.Id,
+                UserName = user.UserName,
                 Roles = userRoles
             };
 
@@ -138,8 +139,8 @@ namespace AspIT_Voting.Web.Controllers
                 return View("NotFound");
             }
             else
-            {               
-                user.UserName = model.UserName;               
+            {
+                user.UserName = model.UserName;
 
                 var result = await userManager.UpdateAsync(user);
 
@@ -224,13 +225,13 @@ namespace AspIT_Voting.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("EditUser", new { id = userId });
+            return RedirectToAction(nameof(EditUser), new { id = userId });
         }
 
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var user = await userManager.FindByIdAsync(id);           
+            var user = await userManager.FindByIdAsync(id);
 
             if (user == null)
             {
@@ -243,7 +244,7 @@ namespace AspIT_Voting.Web.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("ListUsers");
+                    return RedirectToAction(nameof(ListUsers));
                 }
 
                 foreach (var error in result.Errors)
@@ -251,8 +252,16 @@ namespace AspIT_Voting.Web.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
 
-                return View("ListUsers");
+                return View(nameof(ListUsers));
             }
+        }     
+
+        [HttpGet]
+        [Authorize(Roles = "Super Admin")]
+        public IActionResult ListRoles()
+        {
+            var roles = roleManager.Roles;
+            return View(roles);
         }
 
         [HttpGet]
@@ -288,15 +297,7 @@ namespace AspIT_Voting.Web.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Super Admin")]
-        public IActionResult ListRoles()
-        {
-            var roles = roleManager.Roles;
-            return View(roles);
-        }
-
-        [HttpPost]       
+        [HttpPost]
         public async Task<IActionResult> DeleteRole(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
@@ -312,7 +313,7 @@ namespace AspIT_Voting.Web.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("ListRoles");
+                    return RedirectToAction(nameof(ListRoles));
                 }
 
                 foreach (var error in result.Errors)
@@ -320,7 +321,7 @@ namespace AspIT_Voting.Web.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
 
-                return View("ListRoles");
+                return View(nameof(ListRoles));
             }
         }
 
@@ -353,7 +354,7 @@ namespace AspIT_Voting.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]        
+        [HttpPost]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             var role = await roleManager.FindByIdAsync(model.Id);
@@ -388,7 +389,7 @@ namespace AspIT_Voting.Web.Controllers
         {
             ViewBag.roleId = roleId;
 
-            var role = await roleManager.FindByIdAsync(roleId);            
+            var role = await roleManager.FindByIdAsync(roleId);
 
             if (role == null)
             {
@@ -421,7 +422,7 @@ namespace AspIT_Voting.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]        
+        [HttpPost]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
             var role = await roleManager.FindByIdAsync(roleId);
@@ -456,10 +457,10 @@ namespace AspIT_Voting.Web.Controllers
                     if (i < (model.Count - 1))
                         continue;
                     else
-                        return RedirectToAction("EditRole", new { Id = roleId });
+                        return RedirectToAction(nameof(EditRole), new { Id = roleId });
                 }
             }
-            return RedirectToAction("EditRole", new { Id = roleId });
+            return RedirectToAction(nameof(EditRole), new { Id = roleId });
         }
     }
 }

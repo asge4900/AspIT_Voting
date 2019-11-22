@@ -27,7 +27,7 @@ namespace AspIT_Voting.Web.Controllers
         {
             if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
             }
 
             return View();

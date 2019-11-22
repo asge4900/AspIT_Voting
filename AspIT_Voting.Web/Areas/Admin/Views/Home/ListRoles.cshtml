@@ -8,7 +8,7 @@
 
 @if (Model.Any())
 {
-    <a class="btn btn-primary mb-3" asp-controller="Admin" asp-action="CreateRole" >Opret ny rolle</a>
+    <a class="btn btn-primary mb-3" asp-controller="Home" asp-action="CreateRole">Opret ny rolle</a>
 
     foreach (var role in Model)
     {
@@ -22,7 +22,7 @@
             <div class="card-footer">
                 <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post" class="row">
                     <div class="editDiv">
-                        <a asp-controller="Admin" asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary">Rediger</a>
+                        <a asp-controller="Home" asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary">Rediger</a>
                     </div>
 
                     <div class="text-center confirmDeleteDiv hide" id="confirmDeleteDiv_@role.Id">
@@ -51,7 +51,7 @@ else
             <h5 class="card-title">
                 Brug knappen til at oprette roller
             </h5>
-            <a class="btn btn-primary" asp-controller="Admin" asp-action="CreateRole">
+            <a class="btn btn-primary" asp-controller="Home" asp-action="CreateRole">
                 Opret roller
             </a>
         </div>
