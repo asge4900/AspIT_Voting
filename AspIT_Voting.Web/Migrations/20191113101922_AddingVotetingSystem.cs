@@ -13,7 +13,7 @@ namespace AspIT_Voting.Web.Migrations
                 {
                     ActivityId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ActivtyName = table.Column<string>(nullable: false),
+                    ActivityName = table.Column<string>(nullable: false),
                     VoteCount = table.Column<int>(nullable: false),
                     CreationDate = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())")
                 },

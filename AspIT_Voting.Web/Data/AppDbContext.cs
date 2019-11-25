@@ -38,7 +38,7 @@ namespace AspIT_Voting.Web.Data
 
             modelBuilder.Entity<Activity>(entity =>
             {
-                entity.Property(e => e.ActivtyName).IsRequired();
+                entity.Property(e => e.ActivityName).IsRequired();
 
                 entity.Property(e => e.CreationDate).HasDefaultValueSql("(getdate())");
             });

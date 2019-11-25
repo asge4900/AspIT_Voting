@@ -12,7 +12,7 @@ namespace AspIT_Voting.Web.Models
         }
 
         public int ActivityId { get; set; }
-        public string ActivtyName { get; set; }
+        public string ActivityName { get; set; }
         public int VoteCount { get; set; }
         public DateTime CreationDate { get; set; }
 

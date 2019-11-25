@@ -42,9 +42,9 @@ namespace AspIT_Voting.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByNameAsync(model.UserName);
+                var user = await userManager.FindByNameAsync(model.UserName);                
 
-                if (user != null)
+                if (await userManager.IsInRoleAsync(user, "Bruger"))
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");

@@ -98,6 +98,40 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpGet]        
+        public IActionResult UserRegister()
+        {
+            return View();
+        }
+
+        [HttpPost]        
+        public async Task<IActionResult> UserRegister(UserRegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.UserName
+                };
+
+                var result = await userManager.CreateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    result = await userManager.AddToRoleAsync(user, "Bruger");
+
+                    return RedirectToAction(nameof(Index));
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return View(model);
+        }
+
         [HttpGet]
         public IActionResult ListUsers()
         {
