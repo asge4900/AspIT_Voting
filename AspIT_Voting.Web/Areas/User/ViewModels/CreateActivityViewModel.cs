@@ -15,5 +15,6 @@ namespace AspIT_Voting.Web.Areas.User.ViewModels
         public string ActivityName { get; set; }
 
         public List<SelectListItem> ActivitySuggestionsList { get; set; }
+
     }
 }

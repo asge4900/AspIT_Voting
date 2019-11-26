@@ -28,7 +28,7 @@ namespace AspIT_Voting.Web.Migrations
                 {
                     ActivitySuggestionId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ActivtySuggestionName = table.Column<string>(nullable: false)
+                    ActivitySuggestionName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

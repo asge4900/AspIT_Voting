@@ -7,6 +7,6 @@ namespace AspIT_Voting.Web.Models
     public partial class ActivitySuggestion
     {
         public int ActivitySuggestionId { get; set; }
-        public string ActivtySuggestionName { get; set; }
+        public string ActivitySuggestionName { get; set; }
     }
 }

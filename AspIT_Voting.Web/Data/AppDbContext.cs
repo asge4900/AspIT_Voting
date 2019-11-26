@@ -45,7 +45,7 @@ namespace AspIT_Voting.Web.Data
 
             modelBuilder.Entity<ActivitySuggestion>(entity =>
             {
-                entity.Property(e => e.ActivtySuggestionName).IsRequired();
+                entity.Property(e => e.ActivitySuggestionName).IsRequired();
             });
 
             modelBuilder.Entity<Food>(entity =>

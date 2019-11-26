@@ -8,27 +8,28 @@ using Microsoft.EntityFrameworkCore;
 using AspIT_Voting.Web.Data;
 using AspIT_Voting.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using AspIT_Voting.Web.Areas.User.ViewModels;
 
-namespace AspIT_Voting.Web.Areas.Admin.Controllers
+namespace AspIT_Voting.Web.Areas.User.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")]
-    public class ActivitySuggestionsController : Controller
+    [Area("User")]
+    [Authorize(Roles = "Bruger")]
+    public class FoodsController : Controller
     {
         private readonly AppDbContext _context;
 
-        public ActivitySuggestionsController(AppDbContext context)
+        public FoodsController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/ActivitySuggestions
+        // GET: User/Foods
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ActivitySuggestions.ToListAsync());
+            return View(await _context.Foods.ToListAsync());
         }
 
-        // GET: Admin/ActivitySuggestions/Details/5
+        // GET: User/Foods/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,45 +37,60 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var activitySuggestion = await _context.ActivitySuggestions
-                .FirstOrDefaultAsync(m => m.ActivitySuggestionId == id);
-            if (activitySuggestion == null)
+            var food = await _context.Foods
+                .FirstOrDefaultAsync(m => m.FoodId == id);
+            if (food == null)
             {
                 return NotFound();
             }
 
-            return View(activitySuggestion);
+            return View(food);
         }
 
-        // GET: Admin/ActivitySuggestions/Create
+        // GET: User/Foods/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new CreateFoodViewModel();
+
+            var list = model.FoodSuggestionsList = new List<SelectListItem>();
+
+            foreach (var item in _context.FoodSuggestions.Where(acs => !_context.Foods.Select(a => a.FoodName.ToLower()).Contains(acs.FoodSuggestionName.ToLower())).OrderBy(o => o.FoodSuggestionName))
+            {
+                list.Add(new SelectListItem { Value = item.FoodSuggestionName, Text = item.FoodSuggestionName });
+            }
+
+            return View(model);
         }
 
-        // POST: Admin/ActivitySuggestions/Create
+        // POST: User/Foods/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ActivitySuggestionId,ActivitySuggestionName")] ActivitySuggestion model)
+        public async Task<IActionResult> Create(CreateFoodViewModel model)
         {
             if (ModelState.IsValid)
             {
-                if (ActivitySuggestionExists(model.ActivitySuggestionName))
+                if (ActivityExists(model.FoodName))
                 {
-                    ModelState.AddModelError("", "Der eksister allerrede en aktivitet med det navn");
-                    return (View(model));
+                    ModelState.AddModelError("", "Der eksister allerrede en ret med det navn");
+
+                    return View(model);
                 }
 
-                _context.Add(model);
+                var food = new Food
+                {
+                    FoodName = model.FoodName
+                };
+
+                _context.Add(food);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        // GET: Admin/ActivitySuggestions/Edit/5
+        // GET: User/Foods/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,22 +98,22 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var activitySuggestion = await _context.ActivitySuggestions.FindAsync(id);
-            if (activitySuggestion == null)
+            var food = await _context.Foods.FindAsync(id);
+            if (food == null)
             {
                 return NotFound();
             }
-            return View(activitySuggestion);
+            return View(food);
         }
 
-        // POST: Admin/ActivitySuggestions/Edit/5
+        // POST: User/Foods/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ActivitySuggestionId,ActivitySuggestionName")] ActivitySuggestion activitySuggestion)
+        public async Task<IActionResult> Edit(int id, [Bind("FoodId,FoodName,VoteCount,CreationDate")] Food food)
         {
-            if (id != activitySuggestion.ActivitySuggestionId)
+            if (id != food.FoodId)
             {
                 return NotFound();
             }
@@ -106,12 +122,12 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(activitySuggestion);
+                    _context.Update(food);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActivitySuggestionExists(activitySuggestion.ActivitySuggestionId))
+                    if (!FoodExists(food.FoodId))
                     {
                         return NotFound();
                     }
@@ -122,10 +138,10 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(activitySuggestion);
+            return View(food);
         }
 
-        // GET: Admin/ActivitySuggestions/Delete/5
+        // GET: User/Foods/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,35 +149,35 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var activitySuggestion = await _context.ActivitySuggestions
-                .FirstOrDefaultAsync(m => m.ActivitySuggestionId == id);
-            if (activitySuggestion == null)
+            var food = await _context.Foods
+                .FirstOrDefaultAsync(m => m.FoodId == id);
+            if (food == null)
             {
                 return NotFound();
             }
 
-            return View(activitySuggestion);
+            return View(food);
         }
 
-        // POST: Admin/ActivitySuggestions/Delete/5
+        // POST: User/Foods/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var activitySuggestion = await _context.ActivitySuggestions.FindAsync(id);
-            _context.ActivitySuggestions.Remove(activitySuggestion);
+            var food = await _context.Foods.FindAsync(id);
+            _context.Foods.Remove(food);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ActivitySuggestionExists(int id)
+        private bool FoodExists(int id)
         {
-            return _context.ActivitySuggestions.Any(e => e.ActivitySuggestionId == id);
+            return _context.Foods.Any(e => e.FoodId == id);
         }
 
-        private bool ActivitySuggestionExists(string name)
+        private bool ActivityExists(string name)
         {
-            return _context.ActivitySuggestions.Any(e => e.ActivitySuggestionName.ToLower() == name.ToLower());
+            return _context.Foods.Any(e => e.FoodName.ToLower() == name.ToLower());
         }
     }
 }

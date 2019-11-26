@@ -26,7 +26,7 @@ namespace AspIT_Voting.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ActivtyName")
+                    b.Property<string>("ActivityName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -50,7 +50,7 @@ namespace AspIT_Voting.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ActivtySuggestionName")
+                    b.Property<string>("ActivitySuggestionName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

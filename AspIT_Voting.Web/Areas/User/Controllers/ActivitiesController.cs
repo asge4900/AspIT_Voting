@@ -45,23 +45,21 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
             }
 
             return View(activity);
-        }
-
+        }       
 
         // GET: User/Activities/Create
         [HttpGet]
         public IActionResult Create()
         {
-
             var model = new CreateActivityViewModel();
 
-            var list = model.ActivitySuggestionsList = new List<SelectListItem>(); 
+            var list = model.ActivitySuggestionsList = new List<SelectListItem>();
 
-            foreach (var item in _context.ActivitySuggestions)
+            foreach (var item in _context.ActivitySuggestions.Where(acs => !_context.Activities.Select(a => a.ActivityName.ToLower()).Contains(acs.ActivitySuggestionName.ToLower())).OrderBy(o => o.ActivitySuggestionName))
             {
-                list.Add(new SelectListItem { Value = item.ActivtySuggestionName, Text = item.ActivtySuggestionName });                
+                list.Add(new SelectListItem { Value = item.ActivitySuggestionName, Text = item.ActivitySuggestionName });
             }
-          
+
             return View(model);
         }
 
@@ -72,12 +70,20 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateActivityViewModel model)
         {
+            var list = model.ActivitySuggestionsList = new List<SelectListItem>();
+
+            foreach (var item in _context.ActivitySuggestions.Where(acs => !_context.Activities.Select(a => a.ActivityName.ToLower()).Contains(acs.ActivitySuggestionName.ToLower())).OrderBy(o => o.ActivitySuggestionName))
+            {
+                list.Add(new SelectListItem { Value = item.ActivitySuggestionName, Text = item.ActivitySuggestionName });
+            }
+
             if (ModelState.IsValid)
             {
                 if (ActivityExists(model.ActivityName))
                 {
-                    ModelState.AddModelError("", "Der eksister allerrede en aktivitet med det navn");
-                    return (View(model));
+                    ModelState.AddModelError("", "Der eksister allerrede en aktivitet med det navn"); 
+
+                    return View(model);
                 }
 
                 var activity = new Activity
@@ -89,14 +95,7 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-            var list = model.ActivitySuggestionsList = new List<SelectListItem>();
-
-            foreach (var item in _context.ActivitySuggestions)
-            {
-                list.Add(new SelectListItem { Value = item.ActivtySuggestionName, Text = item.ActivtySuggestionName });
-            }
-
+            
             return View(model);
         }        
 
