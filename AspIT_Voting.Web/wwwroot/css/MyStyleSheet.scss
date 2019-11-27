@@ -5,9 +5,9 @@
 
         a {
             position: absolute;
-            bottom: 0;            
+            bottom: 0;
         }
-    }   
+    }
 
     .confirmDeleteDiv {
         margin-left: 30px;
@@ -19,5 +19,20 @@
 
     .hide {
         display: none;
+    }
+
+    .thumbsUpInput {
+        opacity: 0;
+        position: absolute;
+        left: -9999px;
+    }
+
+    .thumbsUpLabel {
+        cursor: pointer;
+        width: 20px;
+    }
+
+    .isThumbsUp {
+        filter: invert(20%) sepia(99%) saturate(6442%) hue-rotate(121deg) brightness(100%) contrast(103%);
     }
 }

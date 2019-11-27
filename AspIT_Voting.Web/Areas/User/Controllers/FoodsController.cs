@@ -9,6 +9,7 @@ using AspIT_Voting.Web.Data;
 using AspIT_Voting.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using AspIT_Voting.Web.Areas.User.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace AspIT_Voting.Web.Areas.User.Controllers
 {
@@ -17,16 +18,48 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
     public class FoodsController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public FoodsController(AppDbContext context)
+        public FoodsController(AppDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            this.userManager = userManager;
+        }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => userManager.GetUserAsync(HttpContext.User);
+
+        private Task<bool> UsersVote(string userId, int foodId)
+        {
+            return Task.FromResult(_context.UserFoods.Any(x => x.UserId == userId && x.FoodId == foodId));
         }
 
         // GET: User/Foods
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Foods.ToListAsync());
+            var userLoggedIn = await GetCurrentUserAsync();
+
+            var model = new List<FoodViewModel>();
+
+            foreach (var food in _context.Foods)
+            {
+                var foodviewmodel = new FoodViewModel
+                {
+                    FoodId = food.FoodId,
+                    FoodName = food.FoodName,
+                    VoteCount = food.VoteCount
+                };
+
+                if (await UsersVote(userLoggedIn.Id, food.FoodId))
+                {
+                    foodviewmodel.IsThumbsUp = true;
+                }
+                else
+                {
+                    foodviewmodel.IsThumbsUp = false;
+                }
+                model.Add(foodviewmodel);
+            }
+            return View(model);
         }
 
         // GET: User/Foods/Details/5
@@ -167,6 +200,85 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
             var food = await _context.Foods.FindAsync(id);
             _context.Foods.Remove(food);
             await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<IActionResult> AddVote(string userId, int foodId)
+        {
+            var userFood = new UserFood
+            {
+                UserId = userId,
+                FoodId = foodId
+            };
+
+            _context.Add(userFood);
+            await _context.SaveChangesAsync();
+
+            var food = await _context.Foods.FindAsync(foodId);
+            if (food == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                food.VoteCount += +1;
+
+                _context.Update(food);
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
+        private async Task<IActionResult> RemoveVote(string userId, int foodId)
+        {
+            var userFood = await _context.UserFoods.FindAsync(userId, foodId);
+
+            _context.UserFoods.Remove(userFood);
+            await _context.SaveChangesAsync();
+
+            var food = await _context.Foods.FindAsync(foodId);
+            if (food == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                food.VoteCount += -1;
+
+                _context.Update(food);
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View();
+        }
+
+        public async Task<IActionResult> Vote(List<FoodViewModel> model)
+        {
+            var userLoggedIn = await GetCurrentUserAsync();
+
+
+            if (userLoggedIn == null)
+            {
+                return NotFound();
+            }
+
+            var item = model.FirstOrDefault();
+
+
+            if (item.IsThumbsUp && !(await UsersVote(userLoggedIn.Id, item.FoodId)))
+            {
+                await AddVote(userLoggedIn.Id, item.FoodId);
+            }
+            else if (!item.IsThumbsUp && await UsersVote(userLoggedIn.Id, item.FoodId))
+            {
+                await RemoveVote(userLoggedIn.Id, item.FoodId);
+            }
             return RedirectToAction(nameof(Index));
         }
 
