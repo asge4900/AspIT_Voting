@@ -42,3 +42,21 @@ const checkBoxesLabel = document.querySelectorAll('.thumbsUpLabel')
             checkBoxesLabel[i].children[0].className = "isThumbsUp";
         }
     }
+
+
+
+
+    //EventLister på thumbsUpLabel
+    // $.ajax({
+    //     type: "post",
+    //     url: "/User/Activities/Vote",
+    //     contentType: "application/json",
+    //     dataType: "json",
+    //     success: function () {            
+    //         console.log("Succes")
+    //     },
+    //     failure: function () {
+    //         console.log("Error");
+    //     }
+    // });
+

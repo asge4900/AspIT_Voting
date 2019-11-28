@@ -161,7 +161,7 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         private async Task<IActionResult> RemoveVote(string userId, int activityId)
@@ -188,7 +188,7 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Vote(List<ActivityViewModel> model)
@@ -212,7 +212,9 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
             {
                 await RemoveVote(userLoggedIn.Id, item.ActivityId);
             }
-            
+
+            //return Json(true);
+
             return RedirectToAction(nameof(Index));
         }
 
