@@ -47,6 +47,7 @@ const checkBoxesLabel = document.querySelectorAll('.thumbsUpLabel')
 
 
     //EventLister på thumbsUpLabel
+    
     // $.ajax({
     //     type: "post",
     //     url: "/User/Activities/Vote",

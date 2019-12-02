@@ -22,11 +22,11 @@
             data: dataT,
             options: {
                 responsive: true,
-                title: { display: true, text: 'Social Activitet' },
+                title: { display: true, text: 'Social aktivitet' },
                 legend: { position: 'bottom' },
                 scales: {
                     xAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: 'Aktivitet' } }],
-                    yAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: 'Antal stemmer' }, ticks: { stepSize: Math.max(...aDatasets1) + 2, beginAtZero: true } }]
+                    yAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: 'Antal stemmer' }, ticks: { stepSize: 1, beginAtZero: true, suggestedMax: Math.max(...aDatasets1) + 2} }]
                 },
             }
         });
@@ -48,7 +48,7 @@ $.ajax({
             datasets: [{
                 label: "Antal stemmer",
                 data: aDatasets1,
-                backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"]
+                backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(153, 102, 255, 0.2)"]
             }]
         };
         var ctx = $("#foodResult").get(0).getContext("2d");
@@ -61,9 +61,18 @@ $.ajax({
                 legend: { position: 'bottom' },
                 scales: {
                     xAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: 'Fredagens ret' } }],
-                    yAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: 'Antal stemmer' }, ticks: { stepSize: Math.max(...aDatasets1) + 2, beginAtZero: true } }]
+                    yAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: 'Antal stemmer' }, ticks: { stepSize: 1, beginAtZero: true, suggestedMax: Math.max(...aDatasets1) + 2} }]
                 },
             }
         });
     }
+});
+
+
+const categoryButton = document.querySelectorAll(".categoryButton")
+categoryButton.forEach(element => {
+    element.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.target.nextElementSibling.classList.toggle("hide");
+    })
 });

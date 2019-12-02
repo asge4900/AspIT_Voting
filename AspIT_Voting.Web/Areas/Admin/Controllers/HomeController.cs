@@ -150,6 +150,12 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
                 return View("NotFound");
             }
+
+            if ( await userManager.IsInRoleAsync(user, "Admin") && !User.IsInRole("Super Admin"))
+            {
+                return RedirectToAction("AccessDenied", "Account", new { area = "" });
+            }
+
             var userRoles = await userManager.GetRolesAsync(user);
 
             var model = new EditUserViewModel
@@ -272,6 +278,12 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
                 return View("NotFound");
             }
+
+            if (await userManager.IsInRoleAsync(user, "Admin") && !User.IsInRole("Super Admin"))
+            {
+                return RedirectToAction("AccessDenied", "Account", new { area = "" });
+            }
+
             else
             {
                 var result = await userManager.DeleteAsync(user);
