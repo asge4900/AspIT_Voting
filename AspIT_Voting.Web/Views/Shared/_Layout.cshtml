@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AspIT_Voting.Web</title>
+    <title>@ViewData["Title"] - AspIT Afstemning</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/MyStyleSheet.css" rel="stylesheet" />
@@ -12,9 +12,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AspIT_Voting.Web</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AAN</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,18 +22,15 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex @*flex-sm-row-reverse*@">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>                        
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Hjem</a>
+                        </li>                                               
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         @if (signInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
                                 <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
-                                    <input type="submit" value="Logud @User.Identity.Name" class="nav-link btn btn-link py-0" style="width:auto" />
+                                    <input type="submit" value="Logud @User.Identity.Name" class="nav-link py-0"/>
                                 </form>
                             </li>
                         }
@@ -48,9 +45,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer">
         <div class="container">
-            &copy; 2019 - AspIT_Voting.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2019
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -22,7 +22,7 @@
             data: dataT,
             options: {
                 responsive: true,
-                title: { display: true, text: 'Social aktivitet' },
+                title: { display: false, text: 'Social aktivitet' },
                 legend: { position: 'bottom' },
                 scales: {
                     xAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: 'Aktivitet' } }],
@@ -57,7 +57,7 @@ $.ajax({
             data: dataT,
             options: {
                 responsive: true,
-                title: { display: true, text: 'Fredagens ret' },
+                title: { display: false, text: 'Fredagens ret' },
                 legend: { position: 'bottom' },
                 scales: {
                     xAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: 'Fredagens ret' } }],
@@ -69,7 +69,7 @@ $.ajax({
 });
 
 
-const categoryButton = document.querySelectorAll(".categoryButton")
+const categoryButton = document.querySelectorAll(".btn")
 categoryButton.forEach(element => {
     element.addEventListener("click", (event) => {
         event.preventDefault();

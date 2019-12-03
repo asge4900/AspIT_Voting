@@ -66,12 +66,13 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
         [Authorize(Roles = "Super Admin")]
         public IActionResult AdminRegister()
         {
+            ViewBag.returnUrl = Request.Headers["Referer"].ToString();
             return View();
         }
 
         [HttpPost]
         [Authorize(Roles = "Super Admin")]
-        public async Task<IActionResult> AdminRegister(AdminRegisterViewModel model)
+        public async Task<IActionResult> AdminRegister(AdminRegisterViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +87,9 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
                 {
                     result = await userManager.AddToRoleAsync(user, "Admin");
 
-                    return RedirectToAction(nameof(Index));
+                    return Redirect(returnUrl);
+
+                    //return RedirectToAction(nameof(Index));
                 }
 
                 foreach (var error in result.Errors)
@@ -101,11 +104,12 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
         [HttpGet]        
         public IActionResult UserRegister()
         {
+            ViewBag.returnUrl = Request.Headers["Referer"].ToString();
             return View();
         }
 
         [HttpPost]        
-        public async Task<IActionResult> UserRegister(UserRegisterViewModel model)
+        public async Task<IActionResult> UserRegister(UserRegisterViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -118,9 +122,11 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
 
                 if (result.Succeeded)
                 {
-                    result = await userManager.AddToRoleAsync(user, "Bruger");
+                    result = await userManager.AddToRoleAsync(user, "Bruger");                    
 
-                    return RedirectToAction(nameof(Index));
+                    return Redirect(returnUrl);
+
+                    //return RedirectToAction(nameof(Index));
                 }
 
                 foreach (var error in result.Errors)
@@ -135,7 +141,7 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult ListUsers()
         {
-            var users = userManager.Users;
+            var users = userManager.Users.OrderBy(u => u.UserName);
 
             return View(users);
         }

@@ -6,29 +6,18 @@
 
 <h1>Index</h1>
 
-<a asp-action="AdminRegister">Opret Admin</a>
+<div class="d-flex flex-column">
+    <a asp-action="AdminRegister" class="btn btn-cat">Opret Admin</a>
 
-<br />
-<br />
+    <a asp-action="UserRegister" class="btn btn-cat">Opret bruger</a>
 
-<a asp-action="UserRegister">Opret bruger</a>
+    <a asp-action="ListUsers" class="btn btn-cat">Administrer Admin/Brugere</a>
 
-<br />
-<br />
+    <a asp-action="ListRoles" class="btn btn-cat">Administrer roller</a> 
 
-<a asp-action="ListUsers">ListUsers</a>
+    <a asp-controller="ActivitySuggestions" asp-action="Index" class="btn btn-cat">Inspiration til aktivtet</a>    
 
-<br />
-<br />
+    <a asp-controller="FoodSuggestions" asp-action="Index" class="btn btn-cat">Inspiration til frokost</a>  
 
-<a asp-action="ListRoles">ListRoles</a>
-
-<br />
-<br />
-
-<a asp-controller="ActivitySuggestions" asp-action="Index">Inspiration til activtet</a>
-
-<br />
-<br />
-
-<a asp-controller="FoodSuggestions" asp-action="Index">Inspiration til frokost</a>
+    <a asp-area="" asp-controller="Home" asp-action="Result" class="btn btn-cat">Resultat</a>
+</div>

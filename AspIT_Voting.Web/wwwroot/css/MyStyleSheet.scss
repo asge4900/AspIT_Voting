@@ -1,5 +1,37 @@
-﻿body {
+﻿@import "_colors.scss";
 
+body {
+
+    //Layout
+    header {
+        background: $bgcolor;
+
+        a, input {
+            color: white;
+        }
+
+        input {            
+            background-color: transparent;
+            border: 1px solid transparent;
+            width: auto;
+        }
+    }
+
+    footer {
+        background: $bgcolor;
+        color: white;
+    }
+    
+    //
+    .btn-cat{
+        background: $bgcolor;
+        color: white;
+        width: 30%;
+        margin: 1% 0;
+    }
+
+
+    //
     .editDiv {
         position: relative;
 
@@ -21,6 +53,8 @@
         display: none;
     }
 
+
+    //
     .thumbsUpInput {
         opacity: 0;
         position: absolute;

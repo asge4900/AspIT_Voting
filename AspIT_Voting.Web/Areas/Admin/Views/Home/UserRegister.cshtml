@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "UserRegister";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var returnUrl = ViewBag.returnUrl;
 }
 
 <h1>UserRegister</h1>
@@ -10,11 +11,12 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" name="returnUrl" value="@returnUrl" />
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
                 <input asp-for="UserName" class="form-control" autocomplete="off" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>            
+            </div>
             <div class="form-group">
                 <input type="submit" value="Opret bruger" class="btn btn-primary" />
             </div>

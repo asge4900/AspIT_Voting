@@ -1,1 +1,1 @@
-﻿body .results{width:40%;margin:5%;}@media screen and (max-width:770px){body .results{width:100%;}}
+﻿body .results{background-color:#087935;width:40%;height:50px;margin:5%;}body .results a{margin-bottom:3%;line-height:36px;color:#fff;font-size:1.5rem;}@media screen and (max-width:770px){body .results{width:100%;}}

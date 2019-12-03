@@ -1,4 +1,23 @@
-﻿body .editDiv {
+﻿body header {
+  background: #087935; }
+  body header a, body header input {
+    color: white; }
+  body header input {
+    background-color: transparent;
+    border: 1px solid transparent;
+    width: auto; }
+
+body footer {
+  background: #087935;
+  color: white; }
+
+body .btn-cat {
+  background: #087935;
+  color: white;
+  width: 30%;
+  margin: 1% 0; }
+
+body .editDiv {
   position: relative; }
   body .editDiv a {
     position: absolute;
