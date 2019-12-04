@@ -5,48 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Social aktivitet</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Hjem</a>
 </p>
-@*<table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ActivityName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.VoteCount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreationDate)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ActivityName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VoteCount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreationDate)
-                    </td>
-                    <td>
-                            <a asp-action="Edit" asp-route-id="@item.ActivityId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.ActivityId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.ActivityId">Delete</a>
-                        </td>
-                </tr>
-            }
-        </tbody>
-    </table>*@
+
+<p>
+    <a asp-action="Create">Opret ny</a>
+</p>
 
 @for (int i = 0; i < Model.Count; i++)
 {
@@ -64,10 +31,7 @@
         </form>
         <div>
             @Model[i].ActivtyName
-        </div>
-        <div style="margin-left: 10px;">
-            @Model[i].VoteCount
-        </div>
+        </div>        
     </div>
 }
 

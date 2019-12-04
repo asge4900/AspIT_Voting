@@ -407,6 +407,7 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             var role = await roleManager.FindByIdAsync(model.Id);

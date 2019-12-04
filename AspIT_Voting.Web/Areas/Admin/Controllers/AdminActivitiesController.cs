@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using AspIT_Voting.Web.Data;
 using AspIT_Voting.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using AspIT_Voting.Web.Areas.Admin.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace AspIT_Voting.Web.Areas.Admin.Controllers
 {
@@ -16,16 +18,47 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
     public class AdminActivitiesController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public AdminActivitiesController(AppDbContext context)
+        public AdminActivitiesController(AppDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            this.userManager = userManager;
         }
 
         // GET: Admin/AdminActivities
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Activities.ToListAsync());
+            //var res = _context.Activities.Zip(userManager.Users, (a, u) => new { Activty = a, User = u });
+
+            var model = new AdminActivityViewModel();
+
+            foreach (var activity in _context.Activities)
+            { 
+                var adminActivityViewModel = new AdminActivityViewModel
+                {
+                    ActivityId = activity.ActivityId,
+                    ActivityName = activity.ActivityName,
+                    CreationDate = activity.CreationDate,
+                    VoteCount = activity.VoteCount
+                };
+
+                model.Activities.Add(adminActivityViewModel);                
+            }           
+
+            foreach (var user in userManager.Users.Where(u => !_context.UserActivities.Select(ua => ua.UserId).Contains(u.Id)).OrderBy(u => u.UserName))
+            {
+                if (await userManager.IsInRoleAsync(user, "Bruger"))
+                {
+                    var adminActivityViewModel = new AdminActivityViewModel
+                    {
+                        UserName = user.UserName
+                    };
+
+                    model.Users.Add(adminActivityViewModel);
+                }                     
+            }            
+            return View(model);
         }
 
         // GET: Admin/AdminActivities/Details/5

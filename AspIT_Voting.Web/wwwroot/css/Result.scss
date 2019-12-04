@@ -2,19 +2,22 @@
 
 body {
 
-    .results{
-        background-color: $bgcolor;        
+    .results {
+        background-color: $bgcolor;
         width: 40%;
         height: 50px;
         margin: 5%;
 
-        a{
+        a {
             margin-bottom: 3%;
-            line-height: 36px;
             color: white;
             font-size: 1.5rem;
+            
+            &:focus{
+                box-shadow: none;                
+            }
         }
-    } 
+    }
 }
 
 @media screen and (max-width: 770px) {
