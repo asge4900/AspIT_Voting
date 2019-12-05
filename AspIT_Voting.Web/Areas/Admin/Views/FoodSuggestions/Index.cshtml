@@ -5,10 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<a asp-controller="Home" asp-action="Index">Tilbage til forsiden</a>
+
+<h1>Inspiration til fredagens ret</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Opret ny</a>
 </p>
 <table class="table">
     <thead>
@@ -26,11 +28,13 @@
                 @Html.DisplayFor(modelItem => item.FoodSuggestionName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FoodSuggestionId">Edit</a> |
+                <a asp-action="Edit" asp-route-id="@item.FoodSuggestionId">Rediger</a> |
                 <a asp-action="Details" asp-route-id="@item.FoodSuggestionId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FoodSuggestionId">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.FoodSuggestionId">Slet</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<a asp-controller="Home" asp-action="Index">Tilbage til forsiden</a>

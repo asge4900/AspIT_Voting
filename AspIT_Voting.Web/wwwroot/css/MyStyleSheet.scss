@@ -1,7 +1,6 @@
 ﻿@import "_colors.scss";
 
 body {
-
     //Layout
     header {
         background: $bgcolor;
@@ -10,7 +9,11 @@ body {
             color: white;
         }
 
-        input {            
+        a:hover {
+            color: white;
+        }
+
+        input {
             background-color: transparent;
             border: 1px solid transparent;
             width: auto;
@@ -21,16 +24,25 @@ body {
         background: $bgcolor;
         color: white;
     }
-    
+
     //
-    .btn-cat{
+    .btn-primary, .btn-cat {
         background: $bgcolor;
+
+        &:hover {
+            background: hsl(144, 88%, 35%);
+        }
+    }
+
+    .btn-cat {
         color: white;
         width: 30%;
         margin: 1% 0;
+    }   
+
+    .btn-danger:hover {
+        background: hsl(354, 90%, 68%);
     }
-
-
     //
     .editDiv {
         position: relative;
@@ -52,8 +64,6 @@ body {
     .hide {
         display: none;
     }
-
-
     //
     .thumbsUpInput {
         opacity: 0;

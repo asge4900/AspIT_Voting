@@ -1,6 +1,8 @@
 ﻿body header {
-  background: #087935; }
+  background: #087835; }
   body header a, body header input {
+    color: white; }
+  body header a:hover {
     color: white; }
   body header input {
     background-color: transparent;
@@ -8,14 +10,21 @@
     width: auto; }
 
 body footer {
-  background: #087935;
+  background: #087835;
   color: white; }
 
+body .btn-primary, body .btn-cat {
+  background: #087835; }
+  body .btn-primary:hover, body .btn-cat:hover {
+    background: #0ba84a; }
+
 body .btn-cat {
-  background: #087935;
   color: white;
   width: 30%;
   margin: 1% 0; }
+
+body .btn-danger:hover {
+  background: #f76473; }
 
 body .editDiv {
   position: relative; }
