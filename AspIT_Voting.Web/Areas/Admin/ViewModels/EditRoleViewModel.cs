@@ -12,7 +12,8 @@ namespace AspIT_Voting.Web.Areas.Admin.ViewModels
 
         public string Id { get; set; }
 
-        [Required(ErrorMessage = "Role Name is required")]
+        [Required(ErrorMessage = "Rolle navn skal udfyldes")]
+        [Display(Name = "Rolle navn")]
         public string RoleName { get; set; }
 
         public List<string> Users { get; set; }

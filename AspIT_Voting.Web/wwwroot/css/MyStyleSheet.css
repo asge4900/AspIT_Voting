@@ -33,7 +33,9 @@ body .editDiv {
     bottom: 0; }
 
 body .confirmDeleteDiv {
-  margin-left: 30px; }
+  /*margin-left: 30px;*/
+  position: relative;
+  left: 50px; }
 
 body .deleteDiv {
   margin-left: 90px; }

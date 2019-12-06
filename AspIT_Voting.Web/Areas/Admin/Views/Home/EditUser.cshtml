@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>EditUser</h1>
+<h1>Rediger bruger</h1>
 
 <div class="row">
     <div class="col-md-6">
@@ -26,13 +26,13 @@
             <div asp-validation-summary="All" class="text-danger"></div>
 
             <div class="form-group">
-                <input type="submit" value="Update" class="btn btn-primary" />
-                <a asp-action="ListUsers" class="btn btn-primary">Cancel</a>
+                <input type="submit" value="Opdater" class="btn btn-primary" />
+                <a asp-action="ListUsers" class="btn btn-primary">Annullere</a>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h3>User Roles</h3>
+                    <h3>Bruger roller</h3>
                 </div>
                 <div class="card-body">
                     @if (Model.Roles.Any())
@@ -44,11 +44,11 @@
                     }
                     else
                     {
-                        <h5 class="card-title">None at the moment</h5>
+                        <h5 class="card-title">Ingen i øjeblikket</h5>
                     }
                 </div>
                 <div class="card-footer">
-                    <a asp-action="ManageUserRoles" asp-route-userId="@Model.Id" class="btn btn-primary">Manage Roles</a>
+                    <a asp-action="ManageUserRoles" asp-route-userId="@Model.Id" class="btn btn-primary">Håndter roller</a>
                 </div>
             </div>
         </form>

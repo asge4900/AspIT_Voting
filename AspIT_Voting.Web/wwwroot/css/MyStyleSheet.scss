@@ -24,7 +24,6 @@ body {
         background: $bgcolor;
         color: white;
     }
-
     //
     .btn-primary, .btn-cat {
         background: $bgcolor;
@@ -38,7 +37,7 @@ body {
         color: white;
         width: 30%;
         margin: 1% 0;
-    }   
+    }
 
     .btn-danger:hover {
         background: hsl(354, 90%, 68%);
@@ -54,7 +53,9 @@ body {
     }
 
     .confirmDeleteDiv {
-        margin-left: 30px;
+        /*margin-left: 30px;*/
+        position: relative;
+        left: 50px;
     }
 
     .deleteDiv {

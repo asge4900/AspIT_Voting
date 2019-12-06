@@ -5,12 +5,10 @@
     var roleId = ViewBag.roleId;
 }
 
-<h1>EditUsersInRole</h1>
-
 <form method="post">
     <div class="card">
         <div class="card-header">
-            <h2>Add or remove users from this role</h2>
+            <h2>Tilføj eller fjern bruger fra denne rolle</h2>
         </div>
         <div class="card-body">
             @for (int i = 0; i < Model.Count; i++)
@@ -26,8 +24,8 @@
             }
         </div>
         <div class="card-footer">
-            <input type="submit" value="Update" class="btn btn-primary" />
-            <a asp-action="EditRole" asp-route-id="@roleId" class="btn btn-primary">Cancel</a>
+            <input type="submit" value="Opdater" class="btn btn-primary" />
+            <a asp-action="EditRole" asp-route-id="@roleId" class="btn btn-primary">Annuller</a>
         </div>
     </div>
 </form>

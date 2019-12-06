@@ -5,7 +5,9 @@
     var returnUrl = ViewBag.returnUrl;
 }
 
-<h1>UserRegister</h1>
+<a href='javascript:history.go(-1)'>Tilbage til forrige side</a>
+
+<h1>Opret ny bruger</h1>
 
 <div class="row">
     <div class="col-md-4">
@@ -23,6 +25,8 @@
         </form>
     </div>
 </div>
+
+<a href='javascript:history.go(-1)'>Tilbage til forrige side</a>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

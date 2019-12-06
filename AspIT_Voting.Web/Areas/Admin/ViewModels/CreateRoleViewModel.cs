@@ -4,7 +4,8 @@ namespace AspIT_Voting.Web.Areas.Admin.ViewModels
 {
     public class CreateRoleViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Feltet skal udfyldes")]
+        [Display(Name = "Rolle navn")]
         public string RoleName { get; set; }
     }
 }
