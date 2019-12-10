@@ -5,9 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<div>
+    <a asp-action="Index">Tilbage</a>
+</div>
 
-<h4>Activity</h4>
+<h1>Opret</h1>
+
+<h4>Aktivitet</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,11 +19,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ActivityName" class="control-label"></label>
-                <input asp-for="ActivityName" class="form-control" />
+                <input asp-for="ActivityName" class="form-control" autocomplete="off"/>
                 <span asp-validation-for="ActivityName" class="text-danger"></span>
             </div>            
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Opret" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -32,18 +36,18 @@
             <div class="form-group">
                 <label asp-for="ActivityName" class="control-label"></label>
                 <select asp-for="ActivityName" asp-items="@Model.ActivitySuggestionsList" class="form-control">
-                    <option value="" hidden disabled selected>Vælg Aktivtet</option>
+                    <option value="" hidden disabled selected>Vælg Aktivitet</option>
                 </select>
                 <span asp-validation-for="ActivityName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Opret" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Tilbage</a>
 </div>
 

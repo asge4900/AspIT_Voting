@@ -11,7 +11,8 @@ namespace AspIT_Voting.Web.Areas.User.ViewModels
     public class CreateActivityViewModel
     {      
 
-        [Required]
+        [Required(ErrorMessage = "Feltet skal udfyldes")]
+        [Display(Name = "Aktvitet")]
         public string ActivityName { get; set; }
 
         public List<SelectListItem> ActivitySuggestionsList { get; set; }

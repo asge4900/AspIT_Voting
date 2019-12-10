@@ -2,20 +2,27 @@
     ViewData["Title"] = "Home Page";
 }
 
+<br />
+<br />
+<br />
+<br />
+
 <div class="row text-center justify-content-center">
     <a class="btn btn-cat mr-3" asp-area="User" asp-controller="Activities" asp-action="Index">Social Activtet</a>
     <a class="btn btn-cat ml-3" asp-area="User" asp-controller="Foods" asp-action="Index">Fredagens ret</a>
 </div>
 
 <br />
+
+<div class="text-center">
+    <a class="btn btn-cat ml-3" asp-controller="Home" asp-action="Result">Resultat</a>
+</div>
+
 <br />
 
-<a asp-controller="Home" asp-action="Result">Resultat</a>
-
-<br />
-<br />
-
-<p id="countdown"></p>
+<div class="text-center">
+    <p id="countdown"></p>
+</div>
 
 @section scripts{
     <script src="~/js/countdown.js"></script>

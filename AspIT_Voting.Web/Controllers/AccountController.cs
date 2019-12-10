@@ -37,7 +37,7 @@ namespace AspIT_Voting.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginViewModel model)
+        public async Task<IActionResult> Login(UserLoginViewModel model, string returnUrl)
         {
 
             if (ModelState.IsValid)
@@ -47,11 +47,18 @@ namespace AspIT_Voting.Web.Controllers
                 if (await userManager.IsInRoleAsync(user, "Bruger"))
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }  
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-
             }
             return View(model);
         }
