@@ -103,18 +103,18 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateActivityViewModel model)
         {
-            var list = model.ActivitySuggestionsList = new List<SelectListItem>();
-
-            foreach (var item in _context.ActivitySuggestions.Where(acs => !_context.Activities.Select(a => a.ActivityName.ToLower()).Contains(acs.ActivitySuggestionName.ToLower())).OrderBy(o => o.ActivitySuggestionName))
-            {
-                list.Add(new SelectListItem { Value = item.ActivitySuggestionName, Text = item.ActivitySuggestionName });
-            }
+            var list = model.ActivitySuggestionsList = new List<SelectListItem>();          
 
             if (ModelState.IsValid)
             {
                 if (ActivityExists(model.ActivityName))
                 {
-                    ModelState.AddModelError("", "Der eksister allerrede en aktivitet med det navn"); 
+                    ModelState.AddModelError("", "Der eksister allerrede en aktivitet med det navn");
+
+                    foreach (var item in _context.ActivitySuggestions.Where(acs => !_context.Activities.Select(a => a.ActivityName.ToLower()).Contains(acs.ActivitySuggestionName.ToLower())).OrderBy(o => o.ActivitySuggestionName))
+                    {
+                        list.Add(new SelectListItem { Value = item.ActivitySuggestionName, Text = item.ActivitySuggestionName });
+                    }
 
                     return View(model);
                 }
@@ -128,7 +128,12 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
+
+            foreach (var item in _context.ActivitySuggestions.Where(acs => !_context.Activities.Select(a => a.ActivityName.ToLower()).Contains(acs.ActivitySuggestionName.ToLower())).OrderBy(o => o.ActivitySuggestionName))
+            {
+                list.Add(new SelectListItem { Value = item.ActivitySuggestionName, Text = item.ActivitySuggestionName });
+            }
+
             return View(model);
         }
 
@@ -158,7 +163,7 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
                 _context.Update(activity);
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return NoContent();
             }
 
             return RedirectToAction(nameof(Index));
@@ -185,12 +190,13 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
                 _context.Update(activity);
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return NoContent();
             }
 
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
         public async Task<IActionResult> Vote(List<ActivityViewModel> model)
         {
             var userLoggedIn = await GetCurrentUserAsync();
@@ -211,9 +217,7 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
             else if (!item.IsThumbsUp && await UsersVote(userLoggedIn.Id, item.ActivityId))
             {
                 await RemoveVote(userLoggedIn.Id, item.ActivityId);
-            }
-
-            //return Json(true);
+            }          
 
             return RedirectToAction(nameof(Index));
         }

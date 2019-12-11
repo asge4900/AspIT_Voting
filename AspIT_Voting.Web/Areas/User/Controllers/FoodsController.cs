@@ -102,11 +102,18 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateFoodViewModel model)
         {
+            var list = model.FoodSuggestionsList = new List<SelectListItem>();
+
             if (ModelState.IsValid)
             {
                 if (ActivityExists(model.FoodName))
                 {
                     ModelState.AddModelError("", "Der eksister allerrede en ret med det navn");
+
+                    foreach (var item in _context.FoodSuggestions.Where(acs => !_context.Foods.Select(a => a.FoodName.ToLower()).Contains(acs.FoodSuggestionName.ToLower())).OrderBy(o => o.FoodSuggestionName))
+                    {
+                        list.Add(new SelectListItem { Value = item.FoodSuggestionName, Text = item.FoodSuggestionName });
+                    }
 
                     return View(model);
                 }
@@ -120,6 +127,12 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            foreach (var item in _context.FoodSuggestions.Where(acs => !_context.Foods.Select(a => a.FoodName.ToLower()).Contains(acs.FoodSuggestionName.ToLower())).OrderBy(o => o.FoodSuggestionName))
+            {
+                list.Add(new SelectListItem { Value = item.FoodSuggestionName, Text = item.FoodSuggestionName });
+            }
+
             return View(model);
         }
 

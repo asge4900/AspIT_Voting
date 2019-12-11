@@ -58,7 +58,7 @@ namespace AspIT_Voting.Web.Controllers
                     }  
                 }
 
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                ModelState.AddModelError(string.Empty, "Ugyldig login forsøg");
             }
             return View(model);
         }

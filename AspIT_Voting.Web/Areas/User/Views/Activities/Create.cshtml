@@ -15,13 +15,18 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" id="activityForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ActivityName" class="control-label"></label>
-                <input asp-for="ActivityName" class="form-control" autocomplete="off"/>
+                <input asp-for="ActivityName" list="activities" class="form-control" autocomplete="off" />
+                <datalist id="activities">
+                    @foreach (var item in Model.ActivitySuggestionsList)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </datalist>
                 <span asp-validation-for="ActivityName" class="text-danger"></span>
-            </div>            
+            </div>
             <div class="form-group">
                 <input type="submit" value="Opret" class="btn btn-primary" />
             </div>
@@ -29,23 +34,23 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ActivityName" class="control-label"></label>
-                <select asp-for="ActivityName" asp-items="@Model.ActivitySuggestionsList" class="form-control">
-                    <option value="" hidden disabled selected>Vælg Aktivitet</option>
-                </select>
-                <span asp-validation-for="ActivityName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Opret" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+
+@*<div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <select asp-for="ActivityName" asp-items="@Model.ActivitySuggestionsList" class="form-control">
+                        <option value="" hidden disabled selected>Vælg Aktivitet</option>
+                    </select>
+                    <span asp-validation-for="ActivityName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Opret" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>*@
 
 <div>
     <a asp-action="Index">Tilbage</a>

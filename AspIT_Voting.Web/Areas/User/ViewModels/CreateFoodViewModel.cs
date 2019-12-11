@@ -10,7 +10,7 @@ namespace AspIT_Voting.Web.Areas.User.ViewModels
     public class CreateFoodViewModel
     {
         [Required(ErrorMessage = "Feltet skal udefyldes")]
-        [Display(Name = "Fredagens ret")]
+        [Display(Name = "Fredagens ret", Prompt = "Skriv en ret")]
         public string FoodName { get; set; }
 
         public List<SelectListItem> FoodSuggestionsList { get; set; }

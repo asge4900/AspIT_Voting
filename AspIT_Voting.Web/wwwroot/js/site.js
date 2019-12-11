@@ -44,20 +44,24 @@ const checkBoxesLabel = document.querySelectorAll('.thumbsUpLabel')
     }
 
 
+const voteForm = document.querySelectorAll(".voteForm")
+
+// checkBoxesLabel.forEach(element => {
+//     element.addEventListener('click', (event) => {
+//         event.preventDefault();
+        
+//     })
+// });
 
 
-    //EventLister på thumbsUpLabel
-    
-    // $.ajax({
-    //     type: "post",
-    //     url: "/User/Activities/Vote",
-    //     contentType: "application/json",
-    //     dataType: "json",
-    //     success: function () {            
-    //         console.log("Succes")
-    //     },
-    //     failure: function () {
-    //         console.log("Error");
-    //     }
-    // });
+for (let i = 0; i < checkBoxes.length; i++) {
+    const element = checkBoxes[i];
+    element.addEventListener('change', (event) => {           
+        voteForm[i].submit();
+        event.preventDefault();        
+    })
+}
+
+
+
 
