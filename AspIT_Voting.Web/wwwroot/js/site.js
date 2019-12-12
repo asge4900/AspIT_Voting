@@ -46,22 +46,26 @@ const checkBoxesLabel = document.querySelectorAll('.thumbsUpLabel')
 
 const voteForm = document.querySelectorAll(".voteForm")
 
-// checkBoxesLabel.forEach(element => {
-//     element.addEventListener('click', (event) => {
-//         event.preventDefault();
-        
-//     })
-// });
-
 
 for (let i = 0; i < checkBoxes.length; i++) {
     const element = checkBoxes[i];
-    element.addEventListener('change', (event) => {           
-        voteForm[i].submit();
-        event.preventDefault();        
+    element.addEventListener('change', () => {
+        mySubmit(voteForm[i], checkBoxesLabel[i])
     })
 }
 
 
-
+function mySubmit(theForm, theThumpsUp) {
+    $.ajax({ // create an AJAX call...
+        data: $(theForm).serialize(), // get the form data
+        type: $(theForm).attr('method'), // GET or POST
+        url: $(theForm).attr('action'), // the file to call
+        success: function () { // on success..
+            theThumpsUp.children[0].classList.toggle("isThumbsUp");                    
+        },
+        error: function(){ // on error..
+            alert("Noget gik galt");
+        }
+    });
+}
 

@@ -18,7 +18,7 @@
 @for (int i = 0; i < Model.Count; i++)
 {
     <div class="row">
-        <form asp-action="Vote" class="voteForm" data-ajax="true">
+        <form asp-action="Vote" method="post" class="voteForm">
             <div class="form-check">
                 <input type="hidden" asp-for="@Model[i].ActivityId" />
                 <input type="hidden" asp-for="@Model[i].ActivtyName" />
@@ -26,8 +26,7 @@
                 <input asp-for="@Model[i].IsThumbsUp" class="form-check-input thumbsUpInput" />
                 <label asp-for="@Model[i].IsThumbsUp" class="thumbsUpLabel">
                     <img src="~/images/thumbs-up-solid.svg" alt="thumbsUp" />
-                </label>
-                <input type="submit"/>
+                </label>                
             </div>
         </form>
         <div>
