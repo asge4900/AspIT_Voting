@@ -12,13 +12,9 @@
     var date = new Date();
 
     DateTime date1 = new DateTime(2019, 12, 10, 9, 0, 0);
-    DayOfWeek dayOfWeek = date1.DayOfWeek;
+    DayOfWeek dayOfWeek = date1.DayOfWeek;  
 
-    DayOfWeek monday = DayOfWeek.Monday;
-    DayOfWeek thursday = DayOfWeek.Thursday;
-    DayOfWeek today = DateTime.Today.DayOfWeek;
-
-    if (date.GetWeekOfYear() % 2 == 0 && DateTime.Now.Hour >= 8 && monday <= today && today <= thursday && DateTime.Now.Hour <= 15)
+    if (date.DateRange(DayOfWeek.Monday, DayOfWeek.Thursday))
     {
         <div class="row text-center justify-content-center">
             <a class="btn btn-cat mr-3" asp-area="User" asp-controller="Activities" asp-action="Index">Social Activtet</a>
