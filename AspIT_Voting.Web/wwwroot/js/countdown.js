@@ -21,10 +21,23 @@ function getWeekNumber() {
 
 let result = getWeekNumber();
 
-if (result[1] % 2 == 0) {
+d = new Date();
+
+if (result[1] % 2 == 0 && ((d.getHours() >= 7 && d.getDay() == 1) || (d.getHours() < 15 && d.getDay() == 2))) {
+   countdownToDay(2, "Du har ", " til at komme med forslag")
+}
+else if (result[1] % 2 == 0 && (d.getHours() >= 7 && d.getDay() == 3) || (d.getHours() < 15 && d.getDay() == 4)) {
+    countdownToDay(4, "Du har ", " til at stemme")
+}
+
+else {
+    document.getElementById("countdown").innerText = "Afstemning er udløbet";
+}
+
+function countdownToDay(day, string1, string2) {
     // Set the date we're counting down to    
-    d.setDate(d.getDate() + (1 + 7 - d.getDay()) % 7);
-    let countDownDate = d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + (day + 7 - d.getDay()) % 7);
+    let countDownDate = d.setHours(15, 0, 0, 0);
 
     // Update the count down every 1 second
     setInterval(function () {
@@ -41,11 +54,21 @@ if (result[1] % 2 == 0) {
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         // Output the result in an element with id="countdown"
-        document.getElementById("countdown").innerText = days + " dag(e) " + hours + " time(r) "
-            + minutes + " minut(ter) " + seconds + " sekund(er) ";
+        if(days > 0){
+            document.getElementById("countdown").innerText = string1 + days + " dag(e) " + hours + " time(r) "
+            + minutes + " minut(ter) " + seconds + " sekund(er) " + string2;
+        }
+        else if (days <= 0 && hours >= 0) {
+            document.getElementById("countdown").innerText = string1 + hours + " time(r) "
+            + minutes + " minut(ter) " + seconds + " sekund(er) " + string2;
+        }
+        else if (days <= 0 && hours <= 0){
+            document.getElementById("countdown").innerText = string1 + minutes + " minut(ter) " + seconds + " sekund(er) " + string2;
+        }
+        else{
+            document.getElementById("countdown").innerText = string1 + seconds + " sekund(er) " + string2;
+        }     
 
     }, 1000);
 }
-else {
-    document.getElementById("countdown").innerText = "Afstemning er udløbet";
-}
+

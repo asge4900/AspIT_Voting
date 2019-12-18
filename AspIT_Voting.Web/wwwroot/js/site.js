@@ -34,26 +34,19 @@ function confirmDelete(uniqueId) {
 
 
 //Change color if thumbsUp
+const voteForm = document.querySelectorAll(".voteForm")
 const checkBoxes = document.querySelectorAll('.thumbsUpInput') 
 const checkBoxesLabel = document.querySelectorAll('.thumbsUpLabel')
-    for (let i = 0; i < checkBoxes.length; i++) {
-        const element = checkBoxes[i];
-        if (element.checked == true) {            
-            checkBoxesLabel[i].children[0].className = "isThumbsUp";
-        }
-    }
-
-
-const voteForm = document.querySelectorAll(".voteForm")
-
 
 for (let i = 0; i < checkBoxes.length; i++) {
     const element = checkBoxes[i];
+    if (element.checked == true) {            
+        checkBoxesLabel[i].children[0].className = "isThumbsUp";
+    }
     element.addEventListener('change', () => {
         mySubmit(voteForm[i], checkBoxesLabel[i])
     })
 }
-
 
 function mySubmit(theForm, theThumpsUp) {
     $.ajax({ // create an AJAX call...
@@ -68,4 +61,6 @@ function mySubmit(theForm, theThumpsUp) {
         }
     });
 }
+
+
 

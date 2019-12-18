@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Other\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

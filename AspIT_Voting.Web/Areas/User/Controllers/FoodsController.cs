@@ -36,6 +36,11 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
         // GET: User/Foods
         public async Task<IActionResult> Index()
         {
+            var oldDate = DateTime.Now.AddDays(-12);
+            var dates = _context.Foods.Where(l => l.CreationDate < oldDate);
+            _context.Foods.RemoveRange(dates);
+            _context.SaveChanges();
+
             var userLoggedIn = await GetCurrentUserAsync();
 
             var model = new List<FoodViewModel>();

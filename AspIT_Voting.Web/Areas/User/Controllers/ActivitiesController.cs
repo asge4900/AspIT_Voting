@@ -36,6 +36,11 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
         // GET: User/Activities
         public async Task<IActionResult> Index()
         {
+            var oldDate = DateTime.Now.AddDays(-12);
+            var dates = _context.Activities.Where(l => l.CreationDate < oldDate);
+            _context.Activities.RemoveRange(dates);
+            _context.SaveChanges();
+
             var userLoggedIn = await GetCurrentUserAsync();
 
             var model = new List<ActivityViewModel>();

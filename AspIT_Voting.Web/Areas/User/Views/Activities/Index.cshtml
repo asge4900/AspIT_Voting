@@ -1,4 +1,5 @@
-﻿@model List<ActivityViewModel>
+﻿@using AspIT_Voting.Web.Other
+@model List<ActivityViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -11,28 +12,45 @@
 
 <h1>Social aktivitet</h1>
 
-<p>
-    <a asp-action="Create">Opret ny</a>
-</p>
+@{
+    var date = new Date();
 
-@for (int i = 0; i < Model.Count; i++)
-{
-    <div class="row">
-        <form asp-action="Vote" method="post" class="voteForm">
-            <div class="form-check">
-                <input type="hidden" asp-for="@Model[i].ActivityId" />
-                <input type="hidden" asp-for="@Model[i].ActivtyName" />
-                <input type="hidden" name="Index" value="@i" /> @*Multiple forms submit*@
-                <input asp-for="@Model[i].IsThumbsUp" class="form-check-input thumbsUpInput" />
-                <label asp-for="@Model[i].IsThumbsUp" class="thumbsUpLabel">
-                    <img src="~/images/thumbs-up-solid.svg" alt="thumbsUp" />
-                </label>                
+
+    DayOfWeek monday = DayOfWeek.Monday;
+    DayOfWeek tuesday = DayOfWeek.Tuesday;
+    DayOfWeek wednesday = DayOfWeek.Wednesday;
+    DayOfWeek thursday = DayOfWeek.Thursday;
+    DayOfWeek today = DateTime.Today.DayOfWeek;
+
+    @if (date.GetWeekOfYear() % 2 == 0 && DateTime.Now.Hour >= 8 && monday <= today && today <= tuesday && DateTime.Now.Hour <= 15)
+    {
+        <p>
+            <a asp-action="Create">Opret ny</a>
+        </p>
+    }
+
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="row">
+            @if (date.GetWeekOfYear() % 2 == 0 && DateTime.Now.Hour >= 8 && wednesday <= today && today <= thursday && DateTime.Now.Hour <= 15)
+            {
+                <form asp-action="Vote" method="post" class="voteForm">
+                    <div class="form-check">
+                        <input type="hidden" asp-for="@Model[i].ActivityId" />
+                        <input type="hidden" asp-for="@Model[i].ActivtyName" />
+                        <input type="hidden" name="Index" value="@i" /> @*Multiple forms submit*@
+                        <input asp-for="@Model[i].IsThumbsUp" class="form-check-input thumbsUpInput" />
+                        <label asp-for="@Model[i].IsThumbsUp" class="thumbsUpLabel">
+                            <img src="~/images/thumbs-up-solid.svg" alt="thumbsUp" />
+                        </label>
+                    </div>
+                </form>
+            }
+            <div>
+                @Model[i].ActivtyName
             </div>
-        </form>
-        <div>
-            @Model[i].ActivtyName
         </div>
-    </div>
+    }
 }
 
 <p>

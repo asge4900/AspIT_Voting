@@ -1,4 +1,5 @@
-﻿@{
+﻿@using AspIT_Voting.Web.Other
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,16 +8,30 @@
 <br />
 <br />
 
-<div class="row text-center justify-content-center">
-    <a class="btn btn-cat mr-3" asp-area="User" asp-controller="Activities" asp-action="Index">Social Activtet</a>
-    <a class="btn btn-cat ml-3" asp-area="User" asp-controller="Foods" asp-action="Index">Fredagens ret</a>
-</div>
+@{
+    var date = new Date();
 
-<br />
+    DateTime date1 = new DateTime(2019, 12, 10, 9, 0, 0);
+    DayOfWeek dayOfWeek = date1.DayOfWeek;
 
-<div class="text-center">
-    <a class="btn btn-cat ml-3" asp-controller="Home" asp-action="Result">Resultat</a>
-</div>
+    DayOfWeek monday = DayOfWeek.Monday;
+    DayOfWeek thursday = DayOfWeek.Thursday;
+    DayOfWeek today = DateTime.Today.DayOfWeek;
+
+    if (date.GetWeekOfYear() % 2 == 0 && DateTime.Now.Hour >= 8 && monday <= today && today <= thursday && DateTime.Now.Hour <= 15)
+    {
+        <div class="row text-center justify-content-center">
+            <a class="btn btn-cat mr-3" asp-area="User" asp-controller="Activities" asp-action="Index">Social Activtet</a>
+            <a class="btn btn-cat ml-3" asp-area="User" asp-controller="Foods" asp-action="Index">Fredagens ret</a>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <a class="btn btn-cat ml-3" asp-controller="Home" asp-action="Result">Resultat</a>
+        </div>
+    }
+}
 
 <br />
 

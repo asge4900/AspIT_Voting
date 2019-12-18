@@ -27,9 +27,7 @@ namespace AspIT_Voting.Web
             services.AddControllersWithViews();
 
             //services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AanDBConnection")));
-
-            var connection = @"Server=aanserver.database.windows.net;Database=AspIT_Voting;User ID=asge4900;Password=Cv210394;Trusted_Connection=false;Encrypt=True;MultipleActiveResultSets=true";
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+            
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
