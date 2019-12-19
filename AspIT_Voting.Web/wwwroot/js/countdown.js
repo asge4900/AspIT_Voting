@@ -23,10 +23,10 @@ let result = getWeekNumber();
 
 d = new Date();
 
-if (result[1] % 2 == 0 && ((d.getHours() >= 7 && d.getDay() == 1) || (d.getHours() < 15 && d.getDay() == 2))) {
+if (result[1] % 2 == 0 && ((d.getHours() >= 8 && d.getDay() == 1) || (d.getHours() < 15 && d.getDay() == 2))) {
    countdownToDay(2, "Du har ", " til at komme med forslag")
 }
-else if (result[1] % 2 == 0 && (d.getHours() >= 7 && d.getDay() == 3) || (d.getHours() < 15 && d.getDay() == 4)) {
+else if (result[1] % 2 == 0 && (d.getHours() >= 8 && d.getDay() == 3) || (d.getHours() < 15 && d.getDay() == 4)) {
     countdownToDay(4, "Du har ", " til at stemme")
 }
 
