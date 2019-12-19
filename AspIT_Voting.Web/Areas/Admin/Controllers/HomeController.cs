@@ -122,11 +122,14 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
 
                 if (result.Succeeded)
                 {
-                    result = await userManager.AddToRoleAsync(user, "Bruger");                    
+                    result = await userManager.AddToRoleAsync(user, "Bruger");
 
-                    return Redirect(returnUrl);
+                    if (returnUrl != null)
+                    {
+                        return Redirect(returnUrl);
+                    }                   
 
-                    //return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(ListUsers));
                 }
 
                 foreach (var error in result.Errors)
@@ -134,7 +137,7 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
             }
-
+            
             return View(model);
         }
 
