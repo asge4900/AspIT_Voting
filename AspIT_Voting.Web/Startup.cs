@@ -28,7 +28,8 @@ namespace AspIT_Voting.Web
 
             //services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AanDBConnection")));
 
-            
+            var connection = @"";
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
