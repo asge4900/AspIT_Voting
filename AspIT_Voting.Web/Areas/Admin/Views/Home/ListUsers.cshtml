@@ -11,7 +11,11 @@
 
 @if (Model.Any())
 {
-    <a asp-controller="Home" asp-action="AdminRegister" class="btn btn-primary mb-3">Tilføj ny admin</a>
+    if (User.IsInRole("Super Admin"))
+    {
+        <a asp-controller="Home" asp-action="AdminRegister" class="btn btn-primary mb-3">Tilføj ny admin</a>
+    }
+    
     <a asp-controller="Home" asp-action="UserRegister" class="btn btn-primary mb-3">Tilføj ny bruger</a>
 
     <h2>Admin</h2>
@@ -26,25 +30,29 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title">@user.UserName</h5>
                             </div>
-                            <div class="card-footer">
-                                <form asp-action="DeleteUser" asp-route-id="@user.Id" method="post" class="row justify-content-center">
-                                    <div class="editDiv">
-                                        <a asp-controller="Home" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary">Rediger</a>
-                                    </div>
-
-                                    <div class="text-center confirmDeleteDiv hide" id="confirmDeleteDiv_@user.Id">
-                                        <span>Er du sikker på at du vil slette?</span>
-                                        <div>
-                                            <input type="submit" value="Ja" class="btn btn-danger" />
-                                            <a href="#" class="btn btn-primary" data-id="@user.Id">Nej</a>
+                            @if (User.IsInRole("Super Admin"))
+                            {
+                                <div class="card-footer">
+                                    <form asp-action="DeleteUser" asp-route-id="@user.Id" method="post" class="row justify-content-center">
+                                        <div class="editDiv">
+                                            <a asp-controller="Home" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary">Rediger</a>
                                         </div>
-                                    </div>
 
-                                    <div class="deleteDiv" id="deleteDiv_@user.Id">
-                                        <a href="#" class="btn btn-danger" data-id="@user.Id">Slet</a>
-                                    </div>
-                                </form>
-                            </div>
+                                        <div class="text-center confirmDeleteDiv hide" id="confirmDeleteDiv_@user.Id">
+                                            <span>Er du sikker på at du vil slette?</span>
+                                            <div>
+                                                <input type="submit" value="Ja" class="btn btn-danger" />
+                                                <a href="#" class="btn btn-primary" data-id="@user.Id">Nej</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="deleteDiv" id="deleteDiv_@user.Id">
+                                            <a href="#" class="btn btn-danger" data-id="@user.Id">Slet</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+
                         </div>
                     </div>
                 }

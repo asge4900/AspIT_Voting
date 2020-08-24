@@ -44,7 +44,7 @@ namespace AspIT_Voting.Web.Controllers
             {
                 var user = await userManager.FindByNameAsync(model.UserName);                
 
-                if (await userManager.IsInRoleAsync(user, "Bruger"))
+                if (user != null && await userManager.IsInRoleAsync(user, "Bruger"))
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
 

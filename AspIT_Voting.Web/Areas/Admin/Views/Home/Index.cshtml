@@ -7,13 +7,16 @@
 <h1>Index</h1>
 
 <div class="d-flex flex-column">
-    <a asp-action="AdminRegister" class="btn btn-cat">Opret Admin</a>
+    @if (User.IsInRole("Super Admin"))
+    {
+        <a asp-action="AdminRegister" class="btn btn-cat">Opret Admin</a>
+
+        <a asp-action="ListRoles" class="btn btn-cat">Administrer roller</a>
+    }
 
     <a asp-action="UserRegister" class="btn btn-cat">Opret bruger</a>
 
     <a asp-action="ListUsers" class="btn btn-cat">Administrer Admin/Brugere</a>
-
-    <a asp-action="ListRoles" class="btn btn-cat">Administrer roller</a>
 
     <a asp-controller="ActivitySuggestions" asp-action="Index" class="btn btn-cat">Inspiration til aktivtet</a>
 
