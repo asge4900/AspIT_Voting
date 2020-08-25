@@ -125,7 +125,8 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
 
                 var food = new Food
                 {
-                    FoodName = model.FoodName
+                    FoodName = model.FoodName,
+                    CreationDate = DateTime.Now
                 };
 
                 _context.Add(food);
