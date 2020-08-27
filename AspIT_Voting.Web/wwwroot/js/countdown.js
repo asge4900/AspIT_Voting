@@ -21,12 +21,19 @@ function getWeekNumber() {
 
 let result = getWeekNumber();
 
+//if (result[1] % 2 == 0) {
+//    console.log("Det er en lige uge")
+//}
+//else {
+//    console.log("Det er en ulige uge")
+//}
+
 d = new Date();
 
 if (result[1] % 2 == 0 && ((d.getHours() >= 8 && d.getDay() == 1) || (d.getHours() < 15 && d.getDay() == 2))) {
    countdownToDay(2, "Du har ", " til at komme med forslag")
 }
-else if (result[1] % 2 == 0 && (d.getHours() >= 8 && d.getDay() == 3) || (d.getHours() < 15 && d.getDay() == 4)) {
+else if (result[1] % 2 == 0 && ((d.getHours() >= 8 && d.getDay() == 3) || (d.getHours() < 15 && d.getDay() == 4))) {
     countdownToDay(4, "Du har ", " til at stemme")
 }
 

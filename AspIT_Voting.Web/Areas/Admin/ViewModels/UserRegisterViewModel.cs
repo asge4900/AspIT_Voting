@@ -11,5 +11,12 @@ namespace AspIT_Voting.Web.Areas.Admin.ViewModels
         [Required(ErrorMessage = "Angiv brugernavn")]
         [Display(Name = "Brugernavn")]
         public string UserName { get; set; }
+
+        [Display(Name = "Navn - Valgfrit")]
+        public string FullName { get; set; }
+
+        [DataType(DataType.Date)]
+        [Display(Name = "Dimission - Valgfrit")]
+        public DateTime? GraduationDate { get; set; }
     }
 }

@@ -115,7 +115,9 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
             {
                 var user = new ApplicationUser
                 {
-                    UserName = model.UserName
+                    UserName = model.UserName,
+                    FullName = model.FullName,
+                    GraduationDate = model.GraduationDate
                 };
 
                 var result = await userManager.CreateAsync(user);
@@ -144,7 +146,7 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult ListUsers()
         {
-            var users = userManager.Users.OrderBy(u => u.UserName);
+            var users = userManager.Users.OrderBy(u => u.UserName);            
 
             return View(users);
         }
@@ -171,6 +173,8 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
             {
                 Id = user.Id,
                 UserName = user.UserName,
+                FullName = user.FullName,
+                GraduationDate = user.GraduationDate,
                 Roles = userRoles
             };
 
@@ -190,6 +194,8 @@ namespace AspIT_Voting.Web.Areas.Admin.Controllers
             else
             {
                 user.UserName = model.UserName;
+                user.FullName = model.FullName;
+                user.GraduationDate = model.GraduationDate;
 
                 var result = await userManager.UpdateAsync(user);
 
