@@ -124,6 +124,18 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
                     return View(model);
                 }
 
+                if (model.ActivityName.Length > 70)
+                {
+                    ModelState.AddModelError("", "Der kan max være 70 tegn");
+
+                    foreach (var item in _context.ActivitySuggestions.Where(acs => !_context.Activities.Select(a => a.ActivityName.ToLower()).Contains(acs.ActivitySuggestionName.ToLower())).OrderBy(o => o.ActivitySuggestionName))
+                    {
+                        list.Add(new SelectListItem { Value = item.ActivitySuggestionName, Text = item.ActivitySuggestionName });
+                    }
+
+                    return View(model);
+                }
+
                 var activity = new Activity
                 {
                     ActivityName = model.ActivityName,

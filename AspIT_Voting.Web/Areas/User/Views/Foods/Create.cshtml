@@ -18,7 +18,7 @@
         <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input asp-for="FoodName" list="foods" class="form-control" autocomplete="off" />
+                <input asp-for="FoodName" list="foods" class="form-control" autocomplete="off" maxlength="70" style="width: 55vw" />
                 <datalist id="foods">
                     @foreach (var item in Model.FoodSuggestionsList)
                     {

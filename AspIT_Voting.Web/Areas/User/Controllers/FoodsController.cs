@@ -121,6 +121,18 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
                     }
 
                     return View(model);
+                }               
+
+                if (model.FoodName.Length > 70)
+                {
+                    ModelState.AddModelError("", "Der kan max være 70 tegn");
+
+                    foreach (var item in _context.FoodSuggestions.Where(acs => !_context.Foods.Select(a => a.FoodName.ToLower()).Contains(acs.FoodSuggestionName.ToLower())).OrderBy(o => o.FoodSuggestionName))
+                    {
+                        list.Add(new SelectListItem { Value = item.FoodSuggestionName, Text = item.FoodSuggestionName });
+                    }
+
+                    return View(model);
                 }
 
                 var food = new Food
