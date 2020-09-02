@@ -10,6 +10,7 @@ using AspIT_Voting.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using AspIT_Voting.Web.Areas.User.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using AspIT_Voting.Web.Other;
 
 namespace AspIT_Voting.Web.Areas.User.Controllers
 {
@@ -88,17 +89,31 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
         // GET: User/Activities/Create
         [HttpGet]
         public IActionResult Create()
-        {
-            var model = new CreateActivityViewModel();
+        {            
+            var date = new Date();
 
-            var list = model.ActivitySuggestionsList = new List<SelectListItem>();
+            DayOfWeek monday = DayOfWeek.Monday;
+            DayOfWeek tuesday = DayOfWeek.Tuesday;            
+            DayOfWeek today = DateTime.Today.DayOfWeek;
 
-            foreach (var item in _context.ActivitySuggestions.Where(acs => !_context.Activities.Select(a => a.ActivityName.ToLower()).Contains(acs.ActivitySuggestionName.ToLower())).OrderBy(o => o.ActivitySuggestionName))
+            if (date.GetWeekOfYear() % 2 == 0 && DateTime.Now.Hour >= 8 && monday <= today && today <= tuesday && DateTime.Now.Hour <= 15)
             {
-                list.Add(new SelectListItem { Value = item.ActivitySuggestionName, Text = item.ActivitySuggestionName });
+                var model = new CreateActivityViewModel();
+
+                var list = model.ActivitySuggestionsList = new List<SelectListItem>();
+
+                foreach (var item in _context.ActivitySuggestions.Where(acs => !_context.Activities.Select(a => a.ActivityName.ToLower()).Contains(acs.ActivitySuggestionName.ToLower())).OrderBy(o => o.ActivitySuggestionName))
+                {
+                    list.Add(new SelectListItem { Value = item.ActivitySuggestionName, Text = item.ActivitySuggestionName });
+                }
+
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
             }
 
-            return View(model);
         }
 
         // POST: User/Activities/Create

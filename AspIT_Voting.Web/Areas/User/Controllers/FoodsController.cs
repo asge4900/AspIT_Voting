@@ -10,6 +10,7 @@ using AspIT_Voting.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using AspIT_Voting.Web.Areas.User.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using AspIT_Voting.Web.Other;
 
 namespace AspIT_Voting.Web.Areas.User.Controllers
 {
@@ -88,16 +89,29 @@ namespace AspIT_Voting.Web.Areas.User.Controllers
         // GET: User/Foods/Create
         public IActionResult Create()
         {
-            var model = new CreateFoodViewModel();
+            var date = new Date();
 
-            var list = model.FoodSuggestionsList = new List<SelectListItem>();
-
-            foreach (var item in _context.FoodSuggestions.Where(acs => !_context.Foods.Select(a => a.FoodName.ToLower()).Contains(acs.FoodSuggestionName.ToLower())).OrderBy(o => o.FoodSuggestionName))
+            DayOfWeek monday = DayOfWeek.Monday;
+            DayOfWeek tuesday = DayOfWeek.Tuesday;            
+            DayOfWeek today = DateTime.Today.DayOfWeek;            
+    
+            if (date.GetWeekOfYear() % 2 == 0 && DateTime.Now.Hour >= 8 && monday <= today && today <= tuesday && DateTime.Now.Hour <= 15)
             {
-                list.Add(new SelectListItem { Value = item.FoodSuggestionName, Text = item.FoodSuggestionName });
-            }
+                var model = new CreateFoodViewModel();
 
-            return View(model);
+                var list = model.FoodSuggestionsList = new List<SelectListItem>();
+
+                foreach (var item in _context.FoodSuggestions.Where(acs => !_context.Foods.Select(a => a.FoodName.ToLower()).Contains(acs.FoodSuggestionName.ToLower())).OrderBy(o => o.FoodSuggestionName))
+                {
+                    list.Add(new SelectListItem { Value = item.FoodSuggestionName, Text = item.FoodSuggestionName });
+                }
+
+                return View(model);
+            }            
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // POST: User/Foods/Create
