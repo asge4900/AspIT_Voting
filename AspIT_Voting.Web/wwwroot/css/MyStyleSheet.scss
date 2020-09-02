@@ -33,9 +33,24 @@ body {
         }
     }
 
+    .container-cat {
+        height: 35vh;
+
+        .btn-cat {            
+            width: 40%;            
+            font-size: 5em;
+        }
+    }
+
+    .admin-cat {        
+
+        .btn-cat {            
+            width: 30%;            
+        }
+    }
+
     .btn-cat {
         color: white;
-        width: 30%;
         margin: 1% 0;
     }
 

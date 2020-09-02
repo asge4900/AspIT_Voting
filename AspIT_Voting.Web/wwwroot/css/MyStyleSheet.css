@@ -18,9 +18,17 @@ body .btn-primary, body .btn-cat {
   body .btn-primary:hover, body .btn-cat:hover {
     background: #0ba84a; }
 
+body .container-cat {
+  height: 35vh; }
+  body .container-cat .btn-cat {
+    width: 40%;
+    font-size: 5em; }
+
+body .admin-cat .btn-cat {
+  width: 30%; }
+
 body .btn-cat {
   color: white;
-  width: 30%;
   margin: 1% 0; }
 
 body .btn-danger:hover {
